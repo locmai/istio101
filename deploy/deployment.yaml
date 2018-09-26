@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-python
+  labels:
+    app: helloworld-python
+spec:
+  ports:
+  - port: 5000
+    name: http
+  selector:
+    app: helloworld-python
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-python-v1
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: helloworld-python
+        version: v1
+    spec:
+      containers:
+      - name: helloworld
+        image: locmai/helloworld-python
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: SERVICE_VERSION
+          value: "v1"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-python-v2
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: helloworld-python
+        version: v2
+    spec:
+      containers:
+      - name: helloworld
+        image: locmai/helloworld-python
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: SERVICE_VERSION
+          value: "v2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-node
+  labels:
+    app: helloworld-node
+spec:
+  ports:
+  - port: 3000
+    name: http
+  selector:
+    app: helloworld-node
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-node
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: helloworld-node
+        version: v2
+    spec:
+      containers:
+      - name: helloworld-node
+        image: locmai/helloworld-node
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: UPSTREAM_URI
+          value: "http://helloworld-python:5000/"
+        - name: SERVICE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

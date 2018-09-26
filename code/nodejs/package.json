@@ -1,0 +1,17 @@
+{
+  "name": "helloworld-node",
+  "version": "1.0.0",
+  "description": "istio test",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Loc Mai",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  }
+}

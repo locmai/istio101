@@ -1,0 +1,7 @@
+# Envs
+env
+.vscode
+node_modules
+package-lock.json
+*.tar.gz
+*.tgz

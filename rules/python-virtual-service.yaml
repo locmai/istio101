@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helloworld-python
+spec: 
+  hosts:
+    - helloworld-python
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: locmai
+    route:
+    - destination:
+        host: helloworld-python
+        subset: v2
+  - route:
+    - destination:
+        host: helloworld-python
+        subset: v1

@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld-python
+spec:
+  host: helloworld-python
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld-node
+spec:
+  host: helloworld-node
+  subsets:
+  - name: v1
+    labels:
+      version: v1
