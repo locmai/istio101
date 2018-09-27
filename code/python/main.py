@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 version = os.getenv('SERVICE_VERSION','v1')
 instance = os.getenv('HOSTNAME','default_instance')
+time_api = os.getenv('TIME_API','http://localhost:8000/time')
 
 @app.route('/')
 def index(): 
@@ -26,7 +27,7 @@ def time():
     return jsonify(
         version=version,
         instance=instance,
-        time=requests.get('http://time.jsontest.com/').json())
+        time=requests.get(time_api).json())
 
 
 @app.errorhandler(500)
